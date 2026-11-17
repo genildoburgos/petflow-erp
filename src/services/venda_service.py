@@ -1,6 +1,8 @@
 import datetime
+from decimal import Decimal
 from sqlalchemy import text
 from src.database.connection import get_engine
+from src.utils.money import to_decimal, round_money
 
 class EstoqueInsuficienteError(Exception):
     pass
@@ -45,18 +47,22 @@ class VendaService:
         engine = get_engine()
         
         with engine.begin() as conn:
-            # 1. Calcula totais de produtos
-            subtotal_produtos = sum(item["quantidade"] * item["preco_unitario"] for item in itens_produtos)
+            # 1. Calcula totais de produtos com precisão Decimal (padrão ERP)
+            subtotal_produtos = Decimal("0.00")
+            for item in itens_produtos:
+                qtd_dec = to_decimal(item["quantidade"])
+                preco_dec = to_decimal(item["preco_unitario"])
+                subtotal_produtos += round_money(qtd_dec * preco_dec)
             
             # Adiciona valor de serviço se houver
-            valor_servico = 0.0
+            valor_servico = Decimal("0.00")
             if atendimento_estetica_id:
                 servico_row = conn.execute(
                     text("SELECT valor_servico FROM atendimentos_estetica WHERE id = :id"),
                     {"id": atendimento_estetica_id}
                 ).mappings().first()
                 if servico_row:
-                    valor_servico += float(servico_row["valor_servico"])
+                    valor_servico += to_decimal(servico_row["valor_servico"])
                     
             if consulta_id:
                 consulta_row = conn.execute(
@@ -64,10 +70,11 @@ class VendaService:
                     {"id": consulta_id}
                 ).mappings().first()
                 if consulta_row:
-                    valor_servico += float(consulta_row["valor_consulta"])
+                    valor_servico += to_decimal(consulta_row["valor_consulta"])
 
-            subtotal_geral = subtotal_produtos + valor_servico
-            valor_total = max(0.0, subtotal_geral - desconto)
+            subtotal_geral = round_money(subtotal_produtos + valor_servico)
+            desconto_dec = round_money(desconto)
+            valor_total = max(Decimal("0.00"), round_money(subtotal_geral - desconto_dec))
 
             # Gera número único da venda
             agora = datetime.datetime.now()
@@ -91,9 +98,9 @@ class VendaService:
                 "atendimento_id": atendimento_estetica_id,
                 "consulta_id": consulta_id,
                 "colaborador_id": colaborador_caixa_id,
-                "subtotal": subtotal_geral,
-                "desconto": desconto,
-                "valor_total": valor_total,
+                "subtotal": float(subtotal_geral),
+                "desconto": float(desconto_dec),
+                "valor_total": float(valor_total),
                 "forma_pagamento": forma_pagamento,
                 "observacoes": observacoes
             }).scalar()

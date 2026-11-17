@@ -1,6 +1,8 @@
 import datetime
+from decimal import Decimal
 from sqlalchemy import text
 from src.database.connection import get_engine
+from src.utils.money import to_decimal, round_money
 
 class AtendimentoService:
     @staticmethod
@@ -49,8 +51,8 @@ class AtendimentoService:
                 {"id": colaborador_id}
             ).mappings().first()
 
-            valor_servico = float(servico["preco_base"])
-            pct_comissao = float(servico["comissao_padrao_pct"] or colaborador["percentual_comissao"] or 0.0)
+            valor_servico = float(round_money(servico["preco_base"]))
+            pct_comissao = float(to_decimal(servico["comissao_padrao_pct"] or colaborador["percentual_comissao"] or 0.0))
 
             agora = datetime.datetime.now()
             numero_os = f"OS-{agora.strftime('%Y%m%d%H%M%S')}"
@@ -299,8 +301,10 @@ class AtendimentoService:
                             {"pid": prod_id, "qtd": -qtd, "ant": est_ant, "pos": est_pos, "cid": consulta_id}
                         )
 
-            # 4. Provisão de comissão do veterinário no Financeiro
-            valor_comissao = valor_consulta * (pct_comissao / 100.0)
+            # 4. Provisão de comissão do veterinário no Financeiro com precisão Decimal
+            valor_cons_dec = round_money(valor_consulta)
+            pct_com_dec = to_decimal(pct_comissao)
+            valor_comissao = round_money(valor_cons_dec * (pct_com_dec / Decimal("100.0")))
             if valor_comissao > 0:
                 conn.execute(
                     text("""
@@ -316,7 +320,7 @@ class AtendimentoService:
                     """),
                     {
                         "desc": f"Comissão Veterinária {num_cons}",
-                        "val": valor_comissao,
+                        "val": float(valor_comissao),
                         "cid": consulta_id
                     }
                 )

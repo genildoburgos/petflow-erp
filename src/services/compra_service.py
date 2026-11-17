@@ -1,5 +1,7 @@
+from decimal import Decimal
 from sqlalchemy import text
 from src.database.connection import get_engine
+from src.utils.money import to_decimal, round_money
 
 class CompraService:
     @staticmethod
@@ -36,7 +38,11 @@ class CompraService:
         engine = get_engine()
         
         with engine.begin() as conn:
-            valor_total = sum(item["quantidade"] * item["preco_unitario"] for item in itens_produtos)
+            valor_total = Decimal("0.00")
+            for item in itens_produtos:
+                qtd_dec = to_decimal(item["quantidade"])
+                preco_dec = to_decimal(item["preco_unitario"])
+                valor_total += round_money(qtd_dec * preco_dec)
 
             # 1. Insere Compra
             insert_compra = text("""
@@ -47,7 +53,7 @@ class CompraService:
             compra_id = conn.execute(insert_compra, {
                 "fornecedor_id": fornecedor_id,
                 "numero_nota": numero_nota,
-                "valor_total": valor_total,
+                "valor_total": float(valor_total),
                 "observacoes": observacoes
             }).scalar()
 
