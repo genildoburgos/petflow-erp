@@ -124,10 +124,11 @@ class AuthManager:
                 st.caption("Alterne de papel para testar regras de negócio, comissões e atendimentos:")
                 personas = {
                     "Conta Google Atual": None,
-                    "Dra. Camila (Veterinária - CRMV 4821)": "camila.vet@petflow.com",
-                    "Lucas Ramos (Tosador Especialista)": "lucas.tosa@petflow.com",
-                    "Mariana Duarte (Operadora de Caixa)": "mariana.caixa@petflow.com",
-                    "Roberto Santos (Gerente Geral)": "roberto.gerente@petflow.com"
+                    "Prof. Dr. Assuero Ximenes (Avaliador UFAPE)": "assuero.ximenes@ufape.edu.br",
+                    "Genildo Burgos (Administrador / Discente)": "gnldburgos@gmail.com",
+                    "Dra. Juliana Aguiar (Veterinária CRMV 12345)": "juliana.vet@gmail.com",
+                    "Carla Tosadora (Estética Pet)": "carla.tosa@gmail.com",
+                    "Fernanda Caixa (Frente de Loja)": "fernanda.caixa@gmail.com"
                 }
                 
                 escolha = st.selectbox(

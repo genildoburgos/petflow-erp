@@ -48,6 +48,8 @@ ON CONFLICT (codigo_prontuario) DO NOTHING;
 
 -- 6. Colaboradores (Com CRMV para Vets, Comissão e Vínculo com Google Auth)
 INSERT INTO colaboradores (nome, cpf, telefone, email, auth_email, cargo, crmv, percentual_comissao) VALUES
+('Prof. Dr. Assuero Ximenes', '999.888.777-00', '(87) 98888-0000', 'assuero.ximenes@ufape.edu.br', 'assuero.ximenes@ufape.edu.br', 'GERENTE', NULL, 0.00),
+('Genildo Burgos', '111.222.333-44', '(87) 99999-1234', 'gnldburgos@gmail.com', 'gnldburgos@gmail.com', 'GERENTE', NULL, 0.00),
 ('Dra. Juliana Aguiar', '011.222.333-99', '(87) 99333-4455', 'juliana.vet@petflow.com', 'juliana.vet@gmail.com', 'VETERINARIO', 'CRMV-PE 12345', 40.00),
 ('Carla Tosadora', '022.333.444-88', '(87) 99111-2233', 'carla.tosa@petflow.com', 'carla.tosa@gmail.com', 'TOSADOR', NULL, 30.00),
 ('Marcos Banhista', '033.444.555-77', '(87) 99222-3344', 'marcos.banho@petflow.com', 'marcos.banho@gmail.com', 'BANHISTA', NULL, 20.00),
