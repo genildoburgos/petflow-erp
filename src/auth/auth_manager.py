@@ -11,12 +11,44 @@ class AuthManager:
     def get_google_sso_email() -> str | None:
         """
         Retorna o e-mail do usuário autenticado nativamente via Google SSO (Streamlit Cloud).
+        Totalmente protegido contra exceções quando o usuário não estiver logado via Viewer Auth.
         """
-        if hasattr(st, "user") and st.user and getattr(st.user, "email", None):
-            return st.user.email
-            
-        if hasattr(st, "experimental_user") and getattr(st.experimental_user, "email", None):
-            return st.experimental_user.email
+        try:
+            user_obj = getattr(st, "user", None)
+            if user_obj is not None:
+                is_logged = getattr(user_obj, "is_logged_in", None)
+                if is_logged is True:
+                    email_val = getattr(user_obj, "email", None)
+                    if email_val:
+                        return str(email_val)
+                elif is_logged is False:
+                    return None
+                
+                if isinstance(user_obj, dict):
+                    return user_obj.get("email")
+                
+                try:
+                    email_val = getattr(user_obj, "email", None)
+                    if email_val:
+                        return str(email_val)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+        try:
+            exp_user = getattr(st, "experimental_user", None)
+            if exp_user is not None:
+                if isinstance(exp_user, dict):
+                    return exp_user.get("email")
+                try:
+                    email_val = getattr(exp_user, "email", None)
+                    if email_val:
+                        return str(email_val)
+                except Exception:
+                    pass
+        except Exception:
+            pass
 
         return None
 

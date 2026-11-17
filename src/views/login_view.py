@@ -158,7 +158,10 @@ def render_login_view():
         with tab_google:
             st.caption("Autenticação com e-mail corporativo via Google Cloud Identity:")
             
-            google_user_email = AuthManager.get_google_sso_email()
+            try:
+                google_user_email = AuthManager.get_google_sso_email()
+            except Exception:
+                google_user_email = None
             
             if google_user_email:
                 st.success(f"Sessão Google detectada: **{google_user_email}**")
