@@ -1,25 +1,34 @@
+import os
 import streamlit as st
+from dotenv import load_dotenv
 from sqlalchemy import text
 from src.database.connection import get_engine
+
+load_dotenv()
 
 class AuthManager:
     @staticmethod
     def is_fallback_allowed() -> bool:
         """
         Indica se o modo de avaliação acadêmica (fallback) está permitido.
-        Em ambiente de produção, configure st.secrets['auth']['allow_evaluator_fallback'] = false.
+        Lê de st.secrets['auth']['allow_evaluator_fallback'] ou do .env (ALLOW_EVALUATOR_FALLBACK).
         """
         try:
             if "auth" in st.secrets and "allow_evaluator_fallback" in st.secrets["auth"]:
                 return bool(st.secrets["auth"]["allow_evaluator_fallback"])
         except Exception:
             pass
+            
+        env_val = os.getenv("ALLOW_EVALUATOR_FALLBACK")
+        if env_val is not None:
+            return env_val.lower() in ("true", "1", "yes")
+            
         return True # Padrão True para apresentação acadêmica da disciplina
 
     @staticmethod
     def get_current_user_email() -> str:
         """
-        Obtém o e-mail do usuário autenticado no Streamlit ou persona simulada.
+        Obtém o e-mail do usuário autenticado no Streamlit, .env ou persona simulada.
         """
         # 1. Verifica se uma persona de teste foi selecionada para a apresentação
         if "simulated_persona_email" in st.session_state and st.session_state["simulated_persona_email"]:
@@ -32,14 +41,14 @@ class AuthManager:
         if hasattr(st, "experimental_user") and getattr(st.experimental_user, "email", None):
             return st.experimental_user.email
 
-        # 3. Fallback padrão configurado no secrets
+        # 3. Fallback configurado no secrets ou .env
         try:
             if "auth" in st.secrets and "default_admin_email" in st.secrets["auth"]:
                 return st.secrets["auth"]["default_admin_email"]
         except Exception:
             pass
 
-        return "avaliador.ufape@gmail.com"
+        return os.getenv("DEFAULT_ADMIN_EMAIL", "avaliador.ufape@gmail.com")
 
     @staticmethod
     def get_current_colaborador():
