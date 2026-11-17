@@ -1,0 +1,105 @@
+# Seed de Pesquisa 04: O Caos Operacional de Pet Shops e Clínicas Veterinárias & A Oportunidade do ERP Simplificado
+
+## 1. Declaração do Problema e Contexto de Mercado
+O mercado pet no Brasil é um dos maiores do mundo, movimentando dezenas de bilhões de reais. No entanto, o ecossistema é composto majoritariamente por **micro e pequenas empresas** (pequenos pet shops de bairro, centros de banho e tosa com balcão de ração, clínicas veterinárias de 1 a 3 consultórios e autônomos/veterinários volantes).
+
+Hoje, esse mercado é disputado por grandes plataformas de software:
+- **SimplesVet:** Líder de mercado e referência nacional em presença de marca, unindo prontuário clínico, agenda de banho/tosa, PDV, estoque e módulo fiscal. Porém, tem custos crescentes que pesam para pequenos lojistas, cobranças por recursos adicionais e complexidade para operações enxutas.
+- **Vetus (Grupo Petlove):** Fortemente estruturado para clínicas e hospitais veterinários com foco em prontuário médico denso, internação e receituário. Tornou-se um software pesado e corporativo, concebido para desktop, com suporte engessado e parametrizações complexas.
+- **Nuvem Vet:** Concorrente com proposta mais enxuta para autônomos e pequenas clínicas, porém com carência de recursos integrados ágeis para quem tem banho e tosa e varejo conjunto.
+- **Sispet (EA7 Sistemas):** Focado em pet shops e estética animal (banho, tosa, creche e hotelzinho pet), com a "Super Agenda", mas com interface tradicional e suporte limitado em horários comerciais padrão.
+
+### O Paradoxo da Complexidade (O "Overkill" dos ERPs Atuais)
+Quase todos os softwares do mercado tentaram se tornar "mini-SAP" para pet shops:
+1. **Burocracia de Telas:** Para vender um pacote de ração e marcar um banho, o atendente precisa abrir 3 a 5 abas diferentes, preencher dezenas de campos irrelevantes e clicar em confirmações infinitas.
+2. **O Caos do Sábado de Manhã:** Sábado é o dia de 60% do faturamento de banho e tosa. É exatamente quando os servidores em nuvem sofrem lentidão, a recepção lota de tutores e animais estressados, e o sistema trava na emissão da NFC-e ou na baixa da agenda.
+3. **A Armadilha do Custo Modular e Lock-in:** O lojista é atraído por uma mensalidade inicial (R$ 80 a R$ 140), mas logo descobre que precisa pagar a mais por: módulo fiscal, cada veterinário/usuário adicional cadastrado, créditos caros para disparo de WhatsApp, e taxas astronômicas para importar ou exportar seus próprios dados se quiser cancelar.
+4. **O Pesadelo das Comissões e Pacotes:** Banhistas e tosadores trabalham por comissão sobre serviço; veterinários ganham porcentagem sobre consultas e vacinas. Os donos de pet shop passam madrugadas conferindo planilhas manuais porque os sistemas calculam mal comissões de pacotes mensais (ex: "compre 4 banhos, ganhe 1 hidratação").
+
+---
+
+## 2. Objetivos Estratégicos da Simulação no MiroFish
+A simulação social de agentes no MiroFish deve colocar proprietários de pet shops, veterinários clínicos, recepcionistas de balcão e tosadores para debater abertamente suas dores, gambiarras de sobrevivência e rejeições aos softwares atuais, respondendo às seguintes perguntas essenciais de produto:
+
+1. **Quais são os 3 maiores motivos de ódio diário dos usuários com SimplesVet, Vetus e Sispet?** (O que faz o usuário querer jogar o computador pela janela?).
+2. **Quais "gambiarras" (workarounds) o pet shop usa hoje fora do software?** (Caderninho de fiado, planilhas paralelas de comissão, WhatsApp web aberto em 3 navegadores, anotações de papel na gaiola do pet).
+3. **Qual é o escopo exato do "ERP Simplificado" (MVP Matador)?** O que precisa ter no primeiro dia para que um dono de pet shop cancele o software atual, e o que deve ser impiedosamente cortado?
+4. **Qual a barreira real de migração e a precificação justa percebida?** (Até quanto uma clínica pequena ou pet shop de bairro está disposto a pagar para ter paz mental e zero lentidão?).
+
+---
+
+## 3. Personas Sintéticas do Ecossistema (Memória e Perfis de Agentes)
+
+### Persona A: O Dono de Pet Shop Pequeno/Médio ("O Apagador de Incêndios")
+- **Perfil:** Empreendedor de 35 a 55 anos. Toca a loja física, cuida das compras de fornecedores e da gestão geral.
+- **Dores Crônicas:** 
+  - Todo início de mês perde 2 dias inteiros conferindo as comissões de 2 tosadores e 1 banhista porque o sistema não separa desconto do cliente da comissão da mão de obra.
+  - Sente-se refém de mensalidades caras que sobem todo ano (paga R$ 250 a R$ 450/mês somando módulos e notas fiscais).
+  - Pânico do turnover de recepcionistas: toda vez que troca a menina do caixa, leva 2 semanas para ela aprender a mexer nas centenas de botões do sistema.
+- **Frase Típica:** *"Eu só queria um sistema que registrasse a venda, desse baixa no estoque, me mostrasse quanto sobrou no mês e calculasse a comissão do meu tosador sem eu precisar de uma calculadora do lado."*
+
+### Persona B: A Médica Veterinária Autônoma / Sócia de Pequena Clínica
+- **Perfil:** Veterinária de 28 a 42 anos. Faz consultas, vacinas, pequenas cirurgias e procedimentos ambulatoriais.
+- **Dores Crônicas:**
+  - Odeia ter que preencher prontuários que parecem declaração de imposto de renda. Quer agilidade: prescrever receita, marcar retorno de vacina e liberar o tutor em 5 minutos.
+  - Não aguenta sistemas que cobram R$ 80 a mais por mês só para adicionar o login do segundo veterinário que dá plantão 2 vezes por semana.
+  - Precisa emitir receitas digitais rápidas que vão direto para o WhatsApp do tutor sem ter que imprimir PDF e escanear.
+- **Frase Típica:** *"O Vetus/SimplesVet é feito para hospital de grande porte. Eu sou uma clínica de 2 salas. Não quero 50 abas de anamnese, quero histórico vacinal claro e receita no WhatsApp."*
+
+### Persona C: A Recepcionista / Operadora de Caixa de Pet Shop
+- **Perfil:** Jovem de 19 a 27 anos, responsável pela abertura e fechamento de caixa, agendamento de banhos e atendimento no balcão.
+- **Dores Crônicas:**
+  - Nos sábados de manhã, com 4 tutores na fila e cachorros latindo, o sistema atual demora 15 segundos entre clicar em 'Adicionar Item' e 'Finalizar Pagamento'.
+  - O sistema bloqueia a venda se o cadastro do pet não tiver todos os dados (cor da pelagem, raça exata, microchip), enquanto o cliente na fila tem pressa.
+  - Dificuldade em avisar os tutores: tem que pegar o celular da loja na mão, salvar o contato do cliente na agenda do telefone e digitar *"Olá, seu cachorro tá pronto"* 30 vezes por dia.
+- **Frase Típica:** *"Se o sistema travar mais uma vez no sábado com cliente reclamando da fila, eu peço demissão. É tela demais pra vender um sachê de Whiskas."*
+
+### Persona D: O Tosador / Esteticista Animal
+- **Perfil:** Profissional prático, recebe por produção (ex: 30% ou 40% sobre o valor da tosa/banho).
+- **Dores Crônicas:**
+  - Desconfiança permanente sobre o fechamento de folha: acha que o patrão 'comeu' comissões de banhos de pacotes mensais.
+  - Precisa ver facilmente na tela ou no papel as observações críticas de cada animal (ex: "pet morde pata direita", "alérgico a perfume", "cuidado com otite").
+- **Frase Típica:** *"O sistema do pet shop nunca bate certinho com a minha anotação de caderno no final do mês."*
+
+### Persona E: O Tutor de Pet Exigente (O Cliente Final)
+- **Perfil:** Tutor mimador de cães e gatos. Trabalha no computador, hiperconectado.
+- **Dores Crônicas:**
+  - Esquece a data da vacina anual porque não recebeu lembrete automático ou recebeu um e-mail burocrático que foi para o spam.
+  - Odeia chegar no pet shop na hora combinada e descobrir que o banho atrasou 1 hora e ninguém avisou.
+  - Quer transparência na comanda e histórico de serviços direto no WhatsApp.
+
+---
+
+## 4. Dimensões de Investigação para a Simulação (Injeção de Tópicos e Estímulos)
+
+### Dimensão 1: A Burocracia Invisível e os "Cliques Desnecessários"
+- Mapeamento detalhado: Quantos cliques leva uma venda balcão + agendamento no SimplesVet vs. Vetus vs. Sispet?
+- O que acontece quando um atendente precisa cadastrar um cliente rápido na fila? A exigência de CPF, endereço completo e cadastro completo do pet gera abandono e uso de caderninho de papel?
+
+### Dimensão 2: O Caos dos Pacotes de Banho e Comissões
+- Como os pet shops operam a venda de pacotes (ex: 4 banhos por R$ 180, validade 30 dias)?
+- Por que os ERPs tradicionais falham tanto nisso? Como o novo software simplificado deve tratar o saldo de banhos e o pagamento da comissão do banhista a cada banho executado?
+
+### Dimensão 3: Comunicação por WhatsApp (O Maior GAP do Mercado)
+- Os softwares cobram fortunas por pacotes de SMS ou APIs corporativas de WhatsApp.
+- O que o pet shop realmente precisa?
+  - Botão de 1 clique: `[Avisar que está pronto via WhatsApp]`
+  - Disparo automático de lembrete de vacina / retorno de banho
+  - Sem cobrança por mensagem enviada e sem burocracia de template do Meta/Facebook.
+
+### Dimensão 4: O "ERP Simplificado": O que Manter e o que Matar?
+- **O que MATAR impiedosamente:**
+  - Módulos complexos de internação hospitalar de UTI.
+  - Telas com 40 campos obrigatórios.
+  - Cobrança de taxa por usuário adicional (limitar crescimento do lojista é odiado).
+  - Fidelidade anual de contrato com multa de cancelamento.
+- **O que MANTER e lapidar com excelência (O Core MVP):**
+  1. **Agenda Visual Relâmpago:** Banho, tosa e consulta em colunas claras, com status de cor (Chegou, Em Banho, Pronto, Entregue).
+  2. **PDV Balcão Ágil:** Venda rápida em 3 segundos, leitor de código de barras e emissão fiscal (NFC-e) sem travar.
+  3. **Comissões Automáticas Transparentes:** Relatório diário/semanal para o dono e comprovante impresso/digital para o tosador conferir.
+  4. **WhatsApp Integrado Gratuito:** Avisos rápidos de "Pet pronto", lembretes de agenda e vacinas.
+  5. **Prontuário Veterinário Direto ao Ponto:** Anamnese objetiva, receituário limpo em PDF/WhatsApp e histórico de vacinas.
+
+### Dimensão 5: Precificação e Adoção
+- Qual a faixa de preço que quebra a concorrência? (Ex: R$ 89 a R$ 149/mês tudo incluso, sem pegadinhas de limite de usuários ou taxa de setup).
+- O que convence o dono de um pet shop a abandonar a inércia e migrar de sistema? (Importação automática de contatos/pets via planilha sem custo).
