@@ -6,9 +6,9 @@ from src.services.cadastro_service import CadastroService
 
 def render_operacional_view():
     st.title("⚡ Atendimento Operacional")
-    st.caption("Módulos de Execução do Serviço: Estética Pet com Check-in Visual e Consultório Clínico com Prontuário Padrão HVU.")
+    st.caption("Módulos Integrados de Atendimento: Estética Pet com Check-in Visual de Segurança e Consultório Veterinário com Prontuário Clínico.")
 
-    tabs = st.tabs(["🛁 Estética (Banho & Tosa)", "🩺 Consultório Clínico (Prontuário HVU)"])
+    tabs = st.tabs(["🛁 Estética (Banho & Tosa)", "🩺 Consultório Veterinário (Prontuário Clínico)"])
 
     # =========================================================================
     # TAB 1: ESTÉTICA (BANHO & TOSA)
@@ -131,11 +131,11 @@ def render_operacional_view():
                 st.error(f"Erro ao listar fila: {e}")
 
     # =========================================================================
-    # TAB 2: CONSULTÓRIO CLÍNICO (PRONTUÁRIO PADRÃO HVU)
+    # TAB 2: CONSULTÓRIO CLÍNICO (PRONTUÁRIO MÉDICO ELETRÔNICO)
     # =========================================================================
     with tabs[1]:
-        st.subheader("Atendimento Veterinário Especializado (Padrão HVU / LMTS)")
-        st.caption("Prontuário estruturado com base no modelo do Hospital Veterinário Universitário da UFAPE.")
+        st.subheader("Atendimento Veterinário Especializado")
+        st.caption("Prontuário clínico estruturado com histórico médico, avaliação de sinais vitais e receituário.")
 
         sub_c1, sub_c2 = st.tabs(["➕ Nova Consulta Clínica", "📋 Histórico de Consultas"])
 
@@ -163,7 +163,7 @@ def render_operacional_view():
                     peso_atual = st.number_input("Peso Atual (kg) *", min_value=0.1, max_value=120.0, value=7.5, step=0.1)
 
                 st.markdown("---")
-                st.markdown("##### 📝 Anamnese Clínica (Estrutura HVU)")
+                st.markdown("##### 📝 Anamnese Clínica Completa")
                 queixa = st.text_area("Queixa Principal *", placeholder="Ex: Animal prostrado há 2 dias, episódios de vômito e recusa de ração.")
                 col_an1, col_an2 = st.columns(2)
                 with col_an1:
@@ -172,7 +172,7 @@ def render_operacional_view():
                     alteracoes = st.text_input("Alterações Observadas pelo Tutor", placeholder="Ex: Ingestão de corpo estranho suspeita")
 
                 st.markdown("---")
-                st.markdown("##### 🩺 Avaliação Físico Geral e Sinais Vitais (HVU)")
+                st.markdown("##### 🩺 Avaliação Físico Geral e Sinais Vitais")
                 v1, v2, v3, v4 = st.columns(4)
                 with v1:
                     temp = st.number_input("Temperatura (°C)", min_value=35.0, max_value=43.0, value=38.6, step=0.1)
@@ -186,7 +186,7 @@ def render_operacional_view():
                 parecer = st.text_area("Parecer Diagnóstico & Conduta Médica", placeholder="Ex: Suspeita de gastroenterite aguda. Instituída fluidoterapia e antibioticoterapia.")
 
                 st.markdown("---")
-                st.markdown("##### 💊 Prescrição Médica (Receituário HVU)")
+                st.markdown("##### 💊 Prescrição Médica & Receituário")
                 dict_meds = {f"{m['nome']} ({m['principio_ativo']} - {m['concentracao']})": m["id"] for m in medicamentos}
                 
                 c_rx1, c_rx2, c_rx3 = st.columns(3)

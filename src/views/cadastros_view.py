@@ -4,7 +4,7 @@ from src.services.cadastro_service import CadastroService
 
 def render_cadastros_view():
     st.title("🗂️ Cadastros Mestres")
-    st.caption("Gestão de entidades estruturais alinhadas aos requisitos acadêmicos e ao padrão de domínio clínico HVU.")
+    st.caption("Gestão centralizada de clientes tutores, prontuários de pacientes, equipe profissional e insumos.")
 
     tabs = st.tabs(["🐶 Animais", "👤 Tutores", "📦 Produtos", "✂️ Serviços", "👨‍⚕️ Colaboradores", "🏭 Fornecedores"])
 
@@ -112,7 +112,7 @@ def render_cadastros_view():
                     email = st.text_input("E-mail (Opcional)")
                     rg = st.text_input("RG (Opcional)")
 
-                st.markdown("**Endereço (Padrão Normalizado HVU):**")
+                st.markdown("**Endereço Cadastral:**")
                 col_e1, col_e2 = st.columns([2, 1])
                 with col_e1:
                     rua = st.text_input("Rua / Logradouro", value="Av. Rui Barbosa")
@@ -345,7 +345,7 @@ def render_cadastros_view():
                     comissao = st.number_input("Comissão Base (%)", min_value=0.0, max_value=100.0, value=20.0, step=1.0)
                     email_pessoal = st.text_input("E-mail Pessoal")
 
-                auth_email = st.text_input("E-mail Google Auth (Supabase) *", placeholder="exemplo@gmail.com ou @ufape.edu.br", help="Permite ao sistema vincular a sessão do Google ao colaborador")
+                auth_email = st.text_input("E-mail Google Auth (Supabase) *", placeholder="exemplo@gmail.com ou @clinica.com.br", help="Permite ao sistema vincular a sessão do Google ao colaborador")
 
                 submitted_colab = st.form_submit_button("Cadastrar Colaborador", use_container_width=True)
                 if submitted_colab:

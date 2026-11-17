@@ -32,13 +32,14 @@ O sistema foi concebido a partir de:
 
 | Módulo | Descrição & Funcionalidades |
 | :--- | :--- |
-| **🏠 Painel Operacional** | Visão geral da operação diária, fila do dia no banho/tosa, consultas médicas recentes e alertas de estoque crítico. |
-| **⚡ Atendimento Operacional** | **Estética:** Check-in visual de segurança (inspeção de nós, pulgas e ferimentos), pipeline de status e aviso dinâmico no WhatsApp em 1 clique.<br>**Clínico (Padrão HVU):** Prontuário médico com anamnese, avaliação físico-geral (temperatura, FC, FR, TPC), receituário e baixa automática de vacinas no estoque. |
+| **🔒 Portal de Acesso (Login)** | Portal de autenticação corporativo isolado (Gate de Acesso) com suporte a perfis de estação de trabalho e Google SSO Cloud Identity. |
+| **🏠 Painel Executivo** | Dashboard executivo humanizado e minimalista com KPIs diários (faturamento consolidado, fila de estética, prontuários ativos e alertas de estoque crítico). |
+| **⚡ Atendimento Operacional** | **Estética:** Check-in visual de segurança (inspeção de nós, pulgas e ferimentos), pipeline de status e aviso dinâmico no WhatsApp em 1 clique.<br>**Clínico:** Prontuário médico com anamnese, avaliação físico-geral (temperatura, FC, FR, TPC), receituário e baixa automática de vacinas no estoque. |
 | **🛒 Frente de Caixa (Fast-POS)** | Checkout em tela única: faturamento unificado de ordens de serviço de estética, consultas clínicas e produtos de varejo com baixa atômica de estoque e geração de receita. |
 | **📥 Compras & Entrada NF** | Registro de notas fiscais de fornecedores com efeito dominó: incremento de estoque, log de auditoria e lançamento automático no contas a pagar. |
 | **📦 Estoque & Rastreabilidade** | Posição física e valorização de insumos e revenda, controle de estoque mínimo com alertas visuais, ajuste de inventário e log imutável de movimentações. |
 | **💰 Financeiro & Caixa** | Fluxo de caixa com saldo realizado e projetado, extrato de títulos, baixa rápida de contas a pagar/receber e lançamento manual de custos fixos. |
-| **🗂️ Cadastros Mestres** | CRUD completo de Animais (com Prontuário sequencial), Tutores (com Endereço normalizado), Produtos, Serviços, Colaboradores (com CRMV e comissões) e Fornecedores. |
+| **🗂️ Cadastros & Equipe** | CRUD completo de Animais (com Prontuário sequencial), Tutores (com Endereço cadastral), Produtos, Serviços, Colaboradores (com CRMV e comissões) e Fornecedores. |
 
 ---
 
@@ -106,18 +107,24 @@ petflow-erp/
 │   ├── database/
 │   │   └── connection.py         # SQLAlchemy Engine & Pool de conexões
 │   ├── services/
-│   │   ├── atendimento_service.py # Lógica de Estética e Clínica (HVU)
+│   │   ├── atendimento_service.py # Lógica de Estética e Clínica
 │   │   ├── cadastro_service.py    # CRUD de entidades mestres
 │   │   ├── compra_service.py      # Efeito dominó de Compras
 │   │   ├── estoque_service.py     # Posição, Alertas e Inventário
 │   │   ├── financeiro_service.py  # Fluxo de caixa e Conciliação
 │   │   └── venda_service.py       # Efeito dominó de Vendas (Fast POS)
+│   ├── utils/
+│   │   ├── money.py              # Operações de precisão financeira Decimal
+│   │   └── theme.py              # Injeção de Design System Boutique SaaS
 │   └── views/
-│       ├── cadastros_view.py      # Tela de Cadastros Mestres
-│       ├── compras_view.py        # Tela de Entrada de Compras
+│       ├── cadastros_view.py      # Tela de Cadastros Mestres & Equipe
+│       ├── compras_view.py        # Tela de Entrada de Compras & NF
 │       ├── estoque_view.py        # Tela de Estoque & Movimentações
 │       ├── financeiro_view.py     # Tela de Finanças & Títulos
-│       ├── home.py                # Dashboard Operacional
+│       ├── home.py                # Painel Executivo & KPIs
+│       ├── login_view.py          # Portal Corporativo de Autenticação
+│       ├── operacional_view.py    # Atendimento Clínico & Estética Pet
+│       └── pdv_view.py            # Frente de Caixa (PDV)
 │       ├── operacional_view.py    # Tela de Banho/Tosa & Consultório
 │       └── pdv_view.py            # Tela de Frente de Caixa Unificada
 ├── app.py                         # Ponto de entrada (st.navigation)
