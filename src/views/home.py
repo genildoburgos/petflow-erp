@@ -13,7 +13,12 @@ def render_home_view():
     Central de monitoramento em tempo real com estética moderna e humanizada.
     """
     colaborador = AuthManager.get_current_colaborador()
-    primeiro_nome = colaborador.get("nome", "Operador").split()[0]
+    nome_completo = colaborador.get("nome", "Operador")
+    partes_nome = nome_completo.split()
+    if len(partes_nome) >= 2 and partes_nome[0] in ("Dr.", "Dra.", "Prof."):
+        primeiro_nome = f"{partes_nome[0]} {partes_nome[1]}"
+    else:
+        primeiro_nome = partes_nome[0] if partes_nome else "Operador"
     data_formatada = datetime.now().strftime("%d de %B de %Y").replace(
         "January", "Janeiro"
     ).replace("February", "Fevereiro").replace("March", "Março").replace("April", "Abril"
